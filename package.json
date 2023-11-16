@@ -20,9 +20,11 @@
     "aws-amplify": "^5.3.2",
     "aws-amplify-react-native": "^7.0.2",
     "cavy": "^4.0.2",
+    "expo": "^49.0.17",
     "fidel-react-native": "1.6.0",
     "inbrain-surveys": "2.3.1",
     "lottie-react-native": "5.1.4",
+    "metro-core": "0.73.10",
     "native-base": "^3.4.28",
     "opentype.js": "^1.3.4",
     "querystring": "^0.2.1",
@@ -34,6 +36,7 @@
     "react-native-boring-avatars": "^1.0.1",
     "react-native-device-info": "^8.7.0",
     "react-native-elements": "^3.4.3",
+    "react-native-exception-handler": "^2.10.10",
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-global-font": "^1.0.3",
@@ -67,7 +70,10 @@
     "lint": "eslint .",
     "remove-deps": "rm -rf node_modules && rm yarn.lock",
     "rebuild-ios": "yarn && cd ios && pod deintegrate && rm Podfile.lock && arch -x86_64 pod install --repo-update && cd ..",
-    "rebuild-android": "cd android && ./gradlew clean && cd .. && rm -rf node_modules && rm yarn.lock && yarn && npx react-native run-android"
+    "rebuild-android": "cd android && ./gradlew clean && cd .. && rm -rf node_modules && rm yarn.lock && yarn && npx react-native run-android",
+    "build-docker": "docker build --platform linux/amd64 -t partner-demo-app .",
+    "emulator-shell-docker": "docker run --rm -it -v $(pwd):/app --privileged --platform linux/amd64 -v yarn-cache:/cache/yarn -v gradle-cache:/cache/gradle -p 8081:8081 partner-demo-app bash",
+    "shell-docker": "docker run --rm -it -v $(pwd):/app --privileged --platform linux/amd64 -v yarn-cache:/cache/yarn -v gradle-cache:/cache/gradle partner-demo-app bash"
   },
   "devDependencies": {
     "detox": "^18.22.2",

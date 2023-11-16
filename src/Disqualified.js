@@ -48,9 +48,6 @@ class Disqualified extends React.Component {
       return null
     }
 
-    const survey = this.state.survey || {meta: {}}
-    const textColor = config.ui.colors.text
-
     const WrappedBlock = wrap(Box)
 
     return (

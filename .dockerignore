@@ -1,0 +1,66 @@
+# Dependency directories (these are rebuilt by Docker)
+node_modules/
+ios/Pods/
+
+# Git directory
+.git/
+
+# Various log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore editor directories
+.idea/
+.vscode/
+
+# Ignore all local configuration files
+*.local
+
+# Ignore specific config files that should not be in the Docker image
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Ignore caches used by tools like ESLint, TSC etc.
+*.tsbuildinfo
+.cache/
+# React Native cache
+metro-cache/
+
+# Ignore the build output directory
+android/app/build/
+ios/build/
+
+# MacOS specific files
+.DS_Store
+
+# Keystore files (for Android signing)
+*.jks
+*.keystore
+
+# Temporary files
+*.swp
+*.swo
+*.tmp
+*.bak
+*.tar
+*.tgz
+*.gz
+*.zip
+
+# Specific to macOS or if using Time Machine
+._*
+.DocumentRevisions-V100/
+.fseventsd/
+.Spotlight-V100/
+.TemporaryItems/
+.Trashes/
+.VolumeIcon.icns
+.com.apple.timemachine.*
+
+# BUCK files
+buck-out/
+.buckd/
+.buckconfig

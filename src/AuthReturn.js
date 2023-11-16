@@ -1,6 +1,9 @@
 import React from 'react'
 import API from './Api'
-import {Auth} from 'aws-amplify'
+import {Auth, Logger} from 'aws-amplify'
+
+Logger.LOG_LEVEL = 'DEBUG'
+Auth.LOG_LEVEL = 'DEBUG'
 
 class AuthReturn extends React.Component {
   constructor(props) {
@@ -17,6 +20,7 @@ class AuthReturn extends React.Component {
     console.log("AUTH RETURN", this.props)
 
     let finalRedirect = '/'
+
 
     let user
     try {
@@ -53,15 +57,16 @@ class AuthReturn extends React.Component {
         // If we get here, it means both the API and Cognito
         // think we're logged out, which means we should
         // redirect back to the login screen
-        finalRedirect = '/surveys'
+        finalRedirect = '/welcome'
       }
     }
 
     console.log("AUTH RETURN GOT USER", user)
-    
 
-    console.log("DISPATCHING USER", user && user.user, this.props.dispatch)
-    this.props.dispatch({type: 'set', user: user && user.user})
+    
+    const manifest = await this.api.getAppManifest()
+    console.log("DISPATCHING USER", user && user.user, manifest, this.props.dispatch)
+    this.props.dispatch({type: 'set', user: user && user.user, manifest: manifest})
 
     this.setState({
       user: user && user.user,
@@ -70,7 +75,7 @@ class AuthReturn extends React.Component {
 
     console.log("DONE MOUNTING AUTH")
 
-    this.props.history.replace(finalRedirect)
+    this.props.history.push(finalRedirect)
   }
 
 

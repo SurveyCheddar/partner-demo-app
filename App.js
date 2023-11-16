@@ -4,12 +4,18 @@ import store from './src/store.js'
 import {connect} from 'react-redux'
 import AppRouter from './src/router'
 import SplashScreen from 'react-native-splash-screen'
-import Amplify, {Auth} from 'aws-amplify'
+import {Auth, Amplify} from 'aws-amplify'
 import {View, StatusBar, SafeAreaView} from 'react-native'
 import {NativeBaseProvider, extendTheme} from 'native-base'
+import {setJSExceptionHandler} from 'react-native-exception-handler';
 
-// const config = require('./src/config')
-// Amplify.configure(config.amplify)
+setJSExceptionHandler((error, isFatal) => {
+  console.log("CAUGHT TOP LEVEL EXCEPTION", error, isFatal)
+})
+
+const config = require('./src/config')
+console.log("AMPLIFY CONFIG IS", config.amplify)
+Amplify.configure(config.amplify)
 
 const theme = extendTheme({
   colors: {
@@ -74,11 +80,13 @@ class App extends React.Component {
       }
     }
 
-    this.props.dispatch({type: 'set', user: user && user.user})
+    const manifest = await this.api.getAppManifest()
+    this.props.dispatch({type: 'set', user: user && user.user, manifest})
     return user || {}
   }
 
   render() {
+    console.log("APP RENDER WITH", this.props.dispatch)
     return (
       <NativeBaseProvider theme={theme}>
         <SafeAreaView style={{backgroundColor: 'white'}}>
@@ -86,6 +94,7 @@ class App extends React.Component {
           <View style={{backgroundColor: 'white', height: '100%'}}>
             <AppRouter
               footer={this.props.footer}
+              dispatch={this.props.dispatch}
             />
           </View>
         </SafeAreaView>

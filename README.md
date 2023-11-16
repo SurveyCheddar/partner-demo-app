@@ -12,13 +12,11 @@ Before you proceed, ensure that you have the following software installed on you
 
 - Node.js (version 14+ recommended)
 - yarn (Nodejs Package Manager)
-- React Native CLI (npx)
 - Xcode (for iOS development) or Android Studio (for Android development)
 - Android SDK or iOS SDK, depending on your target platform
-- AWS Cognito user pool and client (reach out to us if you need help)
 - SurveyCheddar partner app, provisioned at https://partners.surveycheddar.com
 
-### Setup
+### Local Development
 
 1. Clone the repository to your local machine
 
@@ -36,12 +34,12 @@ Before you proceed, ensure that you have the following software installed on you
 
 Android:
 ```
-npx react-native run-android
+npx expo run:android
 ```
 
 iOS:
 ```
-npx react-native run-ios
+npx expo run:ios
 ```
 
 ### Configuration

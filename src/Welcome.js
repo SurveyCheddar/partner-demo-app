@@ -113,7 +113,8 @@ class Welcome extends React.Component {
       }
     }
 
-    this.props.dispatch({type: 'set', user: user && user.user})
+    const manifest = await this.api.getAppManifest()
+    this.props.dispatch({type: 'set', user: user && user.user, manifest})
     return user || {}
   }
 

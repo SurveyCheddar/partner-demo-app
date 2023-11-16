@@ -38,6 +38,16 @@
 				<string>yourapp</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>surveys</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>surveyapp</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>

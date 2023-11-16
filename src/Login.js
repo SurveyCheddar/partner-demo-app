@@ -25,12 +25,11 @@ class Login extends React.Component {
   }
 
   async onGooglePress() {
-    // const state = Buffer.from(`{appId: '${config.appId}'}`).toString('base64')
-    await Auth.federatedSignIn({provider: 'Google'})
+    const results = await Auth.federatedSignIn({provider: 'Google'})
   }
 
   async onApplePress() {
-    await Auth.federatedSignIn({provider: 'SignInWithApple', customState: `{appId: '${config.appId}'}`})
+    await Auth.federatedSignIn({provider: 'SignInWithApple'})
   }
 
   validateEmail(email) {

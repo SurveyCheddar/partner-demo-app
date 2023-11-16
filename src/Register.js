@@ -8,12 +8,7 @@ const config = require('./config')
 
 class Register extends React.Component {
   async onGooglePress() {
-    await Auth.federatedSignIn({
-      provider: 'Google',
-      attributes: {
-        'custom:app_id': config.appId
-      }
-    })
+    await Auth.federatedSignIn({provider: 'Google'})
   }
 
   async onApplePress() {

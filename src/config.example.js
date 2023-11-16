@@ -23,7 +23,7 @@ module.exports = {
   appleAppId: '1321977976',
   packageName: 'your.package.name',
   api: {
-    url: 'https://partners-api.surveycheddar.com/api'
+    url: 'https://api.justsurveys.co'
   },
   app: {
     url: baseUrl

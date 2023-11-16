@@ -114,6 +114,25 @@ class Surveys extends React.Component {
       return this.props.history.push('/login')
     }
 
+    console.log("INITIALIZING INBRAIN", this.props.manifest)
+
+    const {clientId, clientSecret} = this.props.manifest.inbrain
+
+    await inbrain.init(clientId, clientSecret, {
+      title: "Top Rated Surveys",
+      isS2S: false,
+      userId: userId,
+      statusBar: {
+        lightStatusBar: true
+      },
+      navigationBar: {
+        hasShadow: false,
+        titleColor: '#fafafa',
+        buttonsColor: '#FFA900',
+        backgroundColor: '#121212',
+      },
+    })
+
     await this.reloadSurveys()
 
     const nowTime = new Date().getTime()
@@ -125,17 +144,7 @@ class Surveys extends React.Component {
       // If this user has been around for at least a week, ask them to rate the app
       if (userCreatedTime < oneWeekAgo) {
         new Promise(async (resolve, reject) => {
-          const completes = await this.props.resources.get('completes')
-          
-          if (completes && completes.count > 1 && !this.state.user.preventNotifPermissionsPrompt) {
-            const authStatus = await messaging().requestPermission()
-            const enabled =
-            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-            authStatus === messaging.AuthorizationStatus.PROVISIONAL          
-            await this.api.recordExperience('request-notification-permissions', {enabled})
-          }
-  
-          if (completes && completes.count > 3 && !this.state.user.preventRatePrompt) {
+          if (!this.state.user.preventRatePrompt) {
             console.log("RUNNING RATE.RATE")
             try {
               const options = {
@@ -147,7 +156,6 @@ class Surveys extends React.Component {
               }
   
               await Rate.rate(options, async (success, err) => {
-                await this.api.recordExperience('request-rating')
                 console.log("RATE RESULTS", success, err)
                 if (success) {
                   await analytics().logEvent('user_review_success', {})
@@ -168,9 +176,47 @@ class Surveys extends React.Component {
     console.log("RELOADING SURVEYS")
     try {
       if (this.state.user) {
-        // await this.props.resources.clear('surveys')
-        // const surveys = await this.props.resources.get('surveys')
-        const surveys = await this.getSurveys()
+        const [apiSurveys, nativeSurveys] = await Promise.all([
+          this.getSurveys(),
+          inbrain.getNativeSurveys()
+        ])
+        
+        console.log("GOT NATIVE SURVEYS", nativeSurveys)
+
+        const surveys = []
+
+        const manifest = this.props.manifest
+        const introRewardCents = manifest.inbrain.introRewardCents || 15
+
+        const hasNativeIntro = nativeSurveys.length === 1 && nativeSurveys[0].value === introRewardCents
+
+        for (let survey of nativeSurveys) {
+          const directLink = `${config.app.url}/surveys/native/inbrain/${survey.id}`
+          surveys.push({
+            _id: survey.id,
+            directLink: directLink,
+            inBrainNative: true,
+            provider: 'inbrain',
+            meta: {
+              exernal_survey_id: survey.id,
+              loi: survey.time,
+              company: 'Inbrain Native',
+              conversion_rate: .5,
+              rank: survey.rank,
+              payout: (survey.value / 100).toFixed(2),
+              title: 'InBrain Native'
+            }
+          })
+        }
+
+        // If we have the native intro survey, we want users to complete it before they take
+        // API surveys, because they may have completed the API intro studies, meaning the
+        // API will send back a bunch of surveys, drowning out the single native intro.
+        if (!hasNativeIntro) {
+          for (let survey of apiSurveys) {
+            surveys.push(survey)
+          }
+        }
 
         const newState = {
           surveys: surveys

@@ -8,8 +8,6 @@ import {NetworkInfo} from 'react-native-network-info'
 
 const config = require('../src/config')
 
-Amplify.configure(config.amplify)
-
 const API_URL = config.api.url
 
 class API {
@@ -105,6 +103,12 @@ class API {
 
   async getUser() {
     const url = `${API_URL}/v1/user/info`
+    const results = await this.makeRequest(url, {}, {noRedirects: true})
+    return results
+  }
+
+  async getAppManifest() {
+    const url = `${API_URL}/v1/app/manifest`
     const results = await this.makeRequest(url, {}, {noRedirects: true})
     return results
   }
