@@ -1,4 +1,13 @@
 {
   "name": "YourApp",
-  "displayName": "YourApp"
+  "displayName": "YourApp",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "9d3d50f4-81ec-41de-954e-7fec92faf77d"
+      }
+    },
+    "owner": "surveycheddarmike",
+    "slug": "partner-demo-app"
+  }
 }
