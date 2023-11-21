@@ -61,3 +61,5 @@ buck-out/
 # build artifacts
 android/app/release/app-release.aab
 android/app/.cxx*
+
+dist/

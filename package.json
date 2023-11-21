@@ -21,6 +21,7 @@
     "aws-amplify-react-native": "^7.0.2",
     "cavy": "^4.0.2",
     "expo": "^49.0.17",
+    "expo-updates": "~0.18.17",
     "fidel-react-native": "1.6.0",
     "inbrain-surveys": "2.3.1",
     "lottie-react-native": "5.1.4",
