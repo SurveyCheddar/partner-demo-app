@@ -42,11 +42,37 @@ iOS:
 npx expo run:ios
 ```
 
-### Configuration
+### Building for production
 
-1. Change the name of `stc/config.example.js` to `src/config.js`
-2. Fill in details about your app and Cognito
+The recommended way to build, test, and publish your app is using Expo's EAS service. It's free to use at small scale, and we've had good experiences with it. Sign up here: https://expo.dev/
+
+Once you have an account, you can follow the guide here: https://docs.expo.dev/build/setup/
+
+The basic steps are:
+
+#### EAS Install/setup
+```
+npm install -g eas-cli
+
+eas login
+
+eas build:configure
+```
+
+#### Building the app
+
+You can choose which platform to target for the build. Your options are:
+
+`eas build --platform all`
+`eas build --platform ios`
+`eas build --platform android`
+
+### Publishing the app
+
+Follow the guide at https://docs.expo.dev/submit/introduction/
+
+Note: The project comes with an eas.json already in place
 
 # License
 
-This repository is released under a partner license. It is for use only by approved SurveyCheddar partners.
+This repository is released under a private commerical license. It is for use only by approved SurveyCheddar partners.
