@@ -2,12 +2,25 @@
   "name": "YourApp",
   "displayName": "YourApp",
   "expo": {
+    "plugins": [
+      "@config-plugins/detox"
+    ],
     "extra": {
       "eas": {
         "projectId": "9d3d50f4-81ec-41de-954e-7fec92faf77d"
       }
     },
     "owner": "surveycheddarmike",
-    "slug": "partner-demo-app"
+    "slug": "partner-demo-app",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/9d3d50f4-81ec-41de-954e-7fec92faf77d"
+    },
+    "android": {
+      "package": "com.surveycheddar.partnerdemo"
+    },
+    "ios": {
+      "bundleIdentifier": "com.surveycheddar.partnerdemo"
+    }
   }
 }

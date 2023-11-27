@@ -1,4 +1,4 @@
 <resources>
-  <string name="app_name">YourApp</string>
+  <string name="app_name">cheddar-partner-demo</string>
   <string name="expo_runtime_version">1.0.0</string>
 </resources>
