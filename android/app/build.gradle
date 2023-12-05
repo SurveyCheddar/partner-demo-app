@@ -129,15 +129,18 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    namespace "com.yourdomain.yourapp"
+    namespace 'com.surveycheddar.partnerdemo'
 
     defaultConfig {
+        // detox-plugin-default-config
+        testBuildType System.getProperty('testBuildType', 'debug')
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         compileSdkVersion rootProject.ext.compileSdkVersion
-        applicationId "com.yourdomain.yourapp"
+        applicationId 'com.surveycheddar.partnerdemo'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.0.7"
+        versionCode 1
+        versionName "0.0.1"
     }
     splits {
         abi {
@@ -165,6 +168,10 @@ android {
             signingConfig signingConfigs.debug
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            // Detox-specific additions to pro-guard
+            def detoxProguardRulesPath = new File(["node", "--print", "require.resolve('detox/package.json')"].execute(null, rootDir).text.trim(), "../android/detox/proguard-rules-app.pro")
+            proguardFile(detoxProguardRulesPath)
+            
         }
     }
 
@@ -185,11 +192,23 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation("com.facebook.react:react-android")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     implementation platform('com.google.firebase:firebase-bom:32.0.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.facebook.soloader:soloader:0.10.4+'
+
+    androidTestImplementation('com.wix:detox:+') {
+        exclude module: "protobuf-lite"
+    }
+
+    androidTestImplementation "androidx.test.ext:junit:1.1.3"
+    androidTestImplementation "androidx.fragment:fragment-testing:1.4.1"
+    androidTestImplementation "androidx.test:core:1.4.0"
+
 
     // compile project(':react-native-network-info')
     implementation fileTree(dir: "libs", include: ["*.jar"])

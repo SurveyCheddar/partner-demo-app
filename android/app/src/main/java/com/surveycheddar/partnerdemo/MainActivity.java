@@ -1,4 +1,4 @@
-package com.yourdomain.yourapp;
+package com.surveycheddar.partnerdemo;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;

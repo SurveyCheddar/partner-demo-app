@@ -35,7 +35,7 @@ if [[ "$EAS_BUILD_PLATFORM" == "android" ]]; then
 
   # Execute Android tests
   if [[ "$EAS_BUILD_PROFILE" == "test" ]]; then
-    detox test --configuration android.release
+    detox test --configuration android.emu.release
   fi
 else
   # Execute iOS tests

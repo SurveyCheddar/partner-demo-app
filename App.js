@@ -7,11 +7,6 @@ import SplashScreen from 'react-native-splash-screen'
 import {Auth, Amplify} from 'aws-amplify'
 import {View, StatusBar, SafeAreaView} from 'react-native'
 import {NativeBaseProvider, extendTheme} from 'native-base'
-import {setJSExceptionHandler} from 'react-native-exception-handler';
-
-setJSExceptionHandler((error, isFatal) => {
-  console.log("CAUGHT TOP LEVEL EXCEPTION", error, isFatal)
-})
 
 const config = require('./src/config')
 console.log("AMPLIFY CONFIG IS", config.amplify)
